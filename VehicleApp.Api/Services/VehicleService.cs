@@ -42,14 +42,11 @@ public class VehicleService(IDistributedCache cache, IConfiguration configuratio
         var vehicle = VehicleGenerator.GenerateVehicle(id);
 
         try
-        {
-            
-
+        {  
             var cacheOptions = new DistributedCacheEntryOptions
             {
                 AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(_expirationMinutes)
             };
-
             await cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(vehicle), cacheOptions);
             logger.LogInformation("Vehicle {VehicleId} generated and cached", id);
         }
